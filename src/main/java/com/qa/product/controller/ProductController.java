@@ -14,7 +14,7 @@ import com.qa.product.service.ProductService;
 
 @RestController
 @RequestMapping("api/v1/product-service")
-public class EmployeeController {
+public class ProductController {
 
 	@Autowired
 	ProductService prodService;
