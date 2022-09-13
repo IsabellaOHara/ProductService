@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.qa.product.entity.Product;
+import com.qa.product.exception.ProductAlreadyExistsException;
 import com.qa.product.service.ProductService;
 
 @RestController
@@ -22,8 +23,15 @@ public class EmployeeController {
 	ResponseEntity<?> responseEntity;
 	
 	@PostMapping("/product")
-	public ResponseEntity<?> saveProduct(@RequestBody Product product) {
-		Product createdProduct = this.prodService.saveProduct(product);
+	public ResponseEntity<?> saveProduct(@RequestBody Product product) throws ProductAlreadyExistsException {
+		Product createdProduct;  
+		try {		
+				
+				createdProduct = this.prodService.saveProduct(product);
+				
+		} catch (ProductAlreadyExistsException e) {
+			throw e;
+		}
 		responseEntity = new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
 		return responseEntity;
 	}
